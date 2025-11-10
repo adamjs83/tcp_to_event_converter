@@ -1,0 +1,20 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Configure TCP to Event Converter",
+                "description": "Set the TCP port and event type.",
+                "data": {
+                    "tcp_port": "TCP Port",
+                    "event_type": "Event Type"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Cannot connect to the server"
+        },
+        "abort": {
+            "already_configured": "This integration is already configured."
+        }
+    }
+}
