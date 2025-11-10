@@ -19,7 +19,7 @@ A Home Assistant custom integration that creates a TCP server to receive message
 2. Click on "Integrations"
 3. Click the three dots in the top right corner
 4. Select "Custom repositories"
-5. Add this repository URL: `https://gitea.ajsventures.us/adamjs83/tcp_to_event_converer.git`
+5. Add this repository URL: `https://github.com/adamjs83/tcp_to_event_converter.git`
 6. Select "Integration" as the category
 7. Click "Add"
 8. Find "TCP to Event Converter" in the integration list and click "Download"
@@ -288,7 +288,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Reporting Issues
 
-Please report issues on the [GitHub Issues](https://gitea.ajsventures.us/adamjs83/tcp_to_event_converer/issues) page with:
+Please report issues on the [GitHub Issues](https://github.com/adamjs83/tcp_to_event_converter/issues) page with:
 - Home Assistant version
 - Integration version
 - Detailed description of the issue
@@ -305,7 +305,7 @@ Created by adamjs83
 ## Support
 
 For questions and support:
-- Report issues: [Gitea Issues](https://gitea.ajsventures.us/adamjs83/tcp_to_event_converer/issues)
+- Report issues: [GitHub Issues](https://github.com/adamjs83/tcp_to_event_converter/issues)
 - Home Assistant Community: [Community Forum](https://community.home-assistant.io/)
 
 ---
