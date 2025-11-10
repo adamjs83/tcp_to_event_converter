@@ -1,0 +1,10 @@
+{
+    "domain": "tcp_to_event_converter",
+    "name": "TCP to Event Converter",
+    "version": "1.0.0",
+    "documentation": "https://www.example.com/tcp_to_event_converter",
+    "dependencies": [],
+    "codeowners": [],
+    "requirements": [],
+    "config_flow": true
+}
