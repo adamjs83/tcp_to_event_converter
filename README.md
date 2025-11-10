@@ -1,5 +1,13 @@
 # TCP to Event Converter
 
+[![Version](https://img.shields.io/badge/version-0.1.0--alpha.1-orange.svg)](https://github.com/adamjs83/tcp_to_event_converter/releases)
+[![Development Status](https://img.shields.io/badge/status-alpha-red.svg)](https://github.com/adamjs83/tcp_to_event_converter)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+> **ALPHA SOFTWARE - EXPERIMENTAL**
+> This integration is in early alpha development. Expect breaking changes, bugs, and incomplete features.
+> **NOT recommended for production use.** Use at your own risk and please report any issues!
+
 A Home Assistant custom integration that creates a TCP server to receive messages from external devices and converts them into Home Assistant events. This allows any device or application capable of TCP communication to trigger automations in Home Assistant.
 
 ## Features
@@ -12,6 +20,8 @@ A Home Assistant custom integration that creates a TCP server to receive message
 - 📝 Comprehensive logging for debugging
 
 ## Installation
+
+> **ALPHA WARNING:** This is alpha software. Installation and use are at your own risk. Breaking changes may occur in future releases.
 
 ### HACS (Recommended)
 
@@ -259,7 +269,9 @@ sudo ufw allow 54321/tcp
 
 ## Changelog
 
-### Version 1.0.1 (2025-11-10)
+### Version 0.1.0-alpha.1 (2025-11-10)
+**ALPHA RELEASE - EXPERIMENTAL**
+
 - Fixed critical shutdown timeout issue with active TCP connections
 - Added proper task tracking and cancellation for client connections
 - Improved error handling in setup and unload
@@ -268,9 +280,13 @@ sudo ufw allow 54321/tcp
 - Removed redundant EVENT_HOMEASSISTANT_STOP listener
 - Added comprehensive logging and debug messages
 - Added type hints and constants for better code quality
+- Implemented alpha versioning system
+- Added comprehensive alpha status warnings
 
-### Version 1.0.0 (Initial Release)
-- Initial release
+### Version 0.1.0-alpha.0 (Initial Alpha Release)
+**ALPHA RELEASE - EXPERIMENTAL**
+
+- Initial alpha release
 - Basic TCP server functionality
 - Config flow support
 - Event firing on message receipt

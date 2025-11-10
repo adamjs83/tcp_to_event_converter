@@ -1,0 +1,8 @@
+{
+  "name": "TCP to Event Converter",
+  "render_readme": true,
+  "homeassistant": "2023.1.0",
+  "content_in_root": false,
+  "zip_release": false,
+  "filename": "tcp_to_event_converter"
+}
