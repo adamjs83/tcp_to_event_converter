@@ -3,15 +3,25 @@
         "step": {
             "user": {
                 "title": "Configure TCP to Event Converter",
-                "description": "Set the TCP port and event type.",
+                "description": "Set the TCP port (1024-65535) and event type for receiving messages.",
                 "data": {
                     "tcp_port": "TCP Port",
                     "event_type": "Event Type"
+                },
+                "data_description": {
+                    "tcp_port": "Port number to listen on for incoming TCP connections (1024-65535)",
+                    "event_type": "Event type to fire when messages are received (lowercase, must start with letter)"
                 }
             }
         },
         "error": {
-            "cannot_connect": "Cannot connect to the server"
+            "cannot_connect": "Cannot connect to the server",
+            "invalid_port_range": "Port number must be between 1024 and 65535",
+            "port_in_use": "This port is already in use by another application",
+            "port_privileged": "This port requires root/administrator privileges (ports below 1024 are privileged)",
+            "cannot_bind": "Cannot bind to this port. It may be in use or restricted.",
+            "invalid_event_type": "Event type must start with a lowercase letter and contain only lowercase letters, numbers, and underscores",
+            "port_already_configured": "This port is already configured in another entry"
         },
         "abort": {
             "already_configured": "This integration is already configured."

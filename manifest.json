@@ -2,7 +2,7 @@
     "domain": "tcp_to_event_converter",
     "name": "TCP to Event Converter",
     "version": "1.0.0",
-    "documentation": "https://www.example.com/tcp_to_event_converter",
+    "documentation": "https://gitea.ajsventures.us/adamjs83/tcp_to_event_converer",
     "dependencies": [],
     "codeowners": [],
     "requirements": [],
