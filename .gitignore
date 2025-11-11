@@ -126,9 +126,26 @@ dmypy.json
 *~
 .DS_Store
 
-# Claude Code project files (optional - uncomment if you don't want to commit these)
-# .claude/
+# Claude Code project files
+# Keep automation scripts and commands, ignore working documentation
 
-# Keep .claude directory structure but ignore sensitive data if needed
-# .claude/conversations/
-# .claude/workspace_state.json
+# Working documentation (local only)
+.claude/*SUMMARY*.md
+.claude/*SETUP*.md
+.claude/AUTOMATION.md
+.claude/GIT_HOOKS_GUIDE.md
+.claude/QUICK_REFERENCE.md
+.claude/QUICK_START.md
+.claude/WORKFLOW_DIAGRAM.md
+.claude/README.md
+.claude/system_prompt.md
+.claude/conversations/
+.claude/workspace_state.json
+.claude/settings.local.json
+
+# Root-level working files (temporary/local)
+ALPHA_IMPLEMENTATION_SUMMARY.md
+NEXT_STEPS.md
+QUICK_FIX.md
+HACS_TROUBLESHOOTING.md
+create_github_release.sh

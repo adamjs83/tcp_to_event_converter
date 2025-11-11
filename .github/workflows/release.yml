@@ -1,0 +1,120 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on any tag starting with 'v'
+
+permissions:
+  contents: write  # Required to create releases
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper changelog
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          # Remove 'v' prefix from tag
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          # Check if this is a pre-release (alpha, beta, rc)
+          if [[ "$VERSION" =~ (alpha|beta|rc) ]]; then
+            echo "prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "prerelease=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Read manifest.json
+        id: manifest
+        run: |
+          MANIFEST_VERSION=$(jq -r '.version' custom_components/tcp_to_event_converter/manifest.json)
+          echo "manifest_version=$MANIFEST_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Validate version match
+        run: |
+          if [ "${{ steps.version.outputs.version }}" != "${{ steps.manifest.outputs.manifest_version }}" ]; then
+            echo "ERROR: Tag version (${{ steps.version.outputs.version }}) does not match manifest.json version (${{ steps.manifest.outputs.manifest_version }})"
+            exit 1
+          fi
+          echo "✓ Version validation passed"
+
+      - name: Get tag message
+        id: tag_message
+        run: |
+          # Get annotated tag message
+          TAG_MESSAGE=$(git tag -l --format='%(contents)' ${GITHUB_REF#refs/tags/})
+          echo "tag_message<<EOF" >> $GITHUB_OUTPUT
+          echo "$TAG_MESSAGE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release Notes
+        id: release_notes
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+
+          # Create release notes with tag message
+          cat > release_notes.md << 'EOF'
+          # TCP to Event Converter ${{ steps.version.outputs.version }}
+
+          ${{ steps.tag_message.outputs.tag_message }}
+
+          ## Installation
+
+          ### Via HACS (Recommended)
+
+          1. Add this repository as a custom repository in HACS
+          2. Search for "TCP to Event Converter"
+          3. Click Download
+          4. Restart Home Assistant
+
+          ### Manual Installation
+
+          1. Download the [Source Code (zip)](https://github.com/adamjs83/tcp_to_event_converter/archive/refs/tags/v${{ steps.version.outputs.version }}.zip)
+          2. Extract the archive
+          3. Copy `custom_components/tcp_to_event_converter` to your Home Assistant `custom_components` directory
+          4. Restart Home Assistant
+
+          ## Documentation
+
+          - [README](https://github.com/adamjs83/tcp_to_event_converter/blob/v${{ steps.version.outputs.version }}/README.md)
+          - [Version History](https://github.com/adamjs83/tcp_to_event_converter/blob/v${{ steps.version.outputs.version }}/VERSION.md)
+          - [Contributing Guidelines](https://github.com/adamjs83/tcp_to_event_converter/blob/v${{ steps.version.outputs.version }}/CONTRIBUTING.md)
+
+          ## Support
+
+          - [Report Issues](https://github.com/adamjs83/tcp_to_event_converter/issues)
+          - [Discussions](https://github.com/adamjs83/tcp_to_event_converter/discussions)
+          EOF
+
+          echo "Release notes created successfully"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: TCP to Event Converter v${{ steps.version.outputs.version }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: ${{ steps.release_notes.outputs.prerelease }}
+          generate_release_notes: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "## Release Created Successfully! 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Pre-release**: ${{ steps.version.outputs.prerelease }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Release URL**: https://github.com/${{ github.repository }}/releases/tag/${GITHUB_REF#refs/tags/}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "HACS will detect this release within 5-10 minutes." >> $GITHUB_STEP_SUMMARY

@@ -201,19 +201,39 @@ When ready for stable:
 
 ## HACS Considerations
 
-- HACS automatically detects new releases from GitHub tags
-- Users will see update notifications
-- Pre-release flag ensures users know it's alpha
-- Version number displays in HACS interface
+**IMPORTANT:** HACS requires GitHub Releases, not just Git tags!
+
+- HACS detects new releases from **GitHub Releases** (not Git tags alone)
+- A GitHub Release must be created for each version for HACS to show the version number
+- Without a GitHub Release, HACS will show a commit ID instead of the version
+- Pre-release flag ensures users know it's alpha (required for alpha/beta)
+- Version number displays in HACS interface only after GitHub Release is created
+- HACS may take 5-10 minutes to detect new releases
+
+### Automated Release Creation
+
+This repository includes a GitHub Actions workflow that automatically creates releases when you push tags:
+
+1. Push a tag: `git push origin v0.X.X-alpha.X`
+2. GitHub Actions automatically creates the release
+3. HACS detects the release within 5-10 minutes
+
+The workflow (`.github/workflows/release.yml`) handles:
+- Version validation against manifest.json
+- Release notes generation from tag message
+- Pre-release marking for alpha/beta versions
+- Automatic release publication
 
 ## Common Mistakes to Avoid
 
+- ❌ **Creating only a Git tag without a GitHub Release** (HACS won't show version)
 - ❌ Forgetting to mark as "pre-release" in GitHub
 - ❌ Not updating README badge version
 - ❌ Skipping CHANGELOG updates
 - ❌ Creating tag without 'v' prefix
 - ❌ Not testing before release
 - ❌ Forgetting to push tags
+- ❌ Tag version not matching manifest.json version
 
 ## Hotfix Process
 
