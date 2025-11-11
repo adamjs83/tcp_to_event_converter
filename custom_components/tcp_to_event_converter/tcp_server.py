@@ -190,7 +190,7 @@ class TCPServer:
                         timeout=READ_TIMEOUT
                     )
                 except asyncio.TimeoutError:
-                    _LOGGER.warning(
+                    _LOGGER.debug(
                         "Read timeout (%s seconds) from %s, closing connection",
                         READ_TIMEOUT, addr
                     )
